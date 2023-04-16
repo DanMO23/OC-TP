@@ -1,8 +1,9 @@
 import sys
 
 def funcoesSemParametro(arq_inst):
+    
     for i in range(0, len(arq_inst)):
-        if (arq_inst[i][0] == "\n"):
+        if (arq_inst[i][0] == "\n" or arq_inst[i][0:1] == " \n"):
             continue
         else:
             if (arq_inst[i][0:4] == "bne "):
@@ -202,16 +203,3 @@ def OpXor(arq_inst):
     rs2 = "{0:05b}".format(rs2)
     opcode = "0000000" + rs2 + rs1 + "100" + rd + "0110011"
     return opcode
-
-if (len(sys.argv) < 2):
-    print("Arquivo não informado por linha de comando")
-    sys.exit
-elif (len(sys.argv) < 4):
-    texto = open(sys.argv[1], "r")
-    arq_inst = texto.readlines()
-    funcoesSemParametro(arq_inst)
-else:
-    texto = open(sys.argv[1], "r")
-    arq_inst = texto.readlines()
-    saida = sys.argv[len(sys.argv)-1] + ".asm"
-    funcoesComParametro(arq_inst, saida)
