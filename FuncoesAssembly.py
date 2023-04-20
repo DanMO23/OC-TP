@@ -25,31 +25,34 @@ def funcoesSemParametro(arq_inst):
         print(opcode)
 def funcoesComParametro(arq_inst, saida):
     for i in range(0, len(arq_inst)):
-        if (arq_inst[i][0:4] == "bne "):
-            opcode = OpBne(arq_inst[i])
-        elif (arq_inst[i][0:3] == "sw "):
-            opcode = OpSw(arq_inst[i])
-        elif (arq_inst[i][0:4] == "addi"):
-            opcode = OpAddi(arq_inst[i])
-        elif (arq_inst[i][0:3] == "lw "):
-            opcode = OpLw(arq_inst[i])
-        elif (arq_inst[i][0:4] == "sll "):
-            opcode = OpSll(arq_inst[i])
-        elif (arq_inst[i][0:4] == "add "):
-            opcode = OpAdd(arq_inst[i])
-        elif (arq_inst[i][0:4] == "xor "):
-            opcode = OpXor(arq_inst[i])
+        if (arq_inst[i][0] == "\n" or arq_inst[i][0:1] == " \n"):
+            continue
         else:
-            opcode = "Instrução não localizada."
-        if (i == 0):
-            arqsaida = open(saida, "w")
-        else:
-            arqsaida = open(saida, "a")
-        if (i == len(arq_inst)):
-            arqsaida.write(opcode)
-        else:
-            arqsaida.write(str(opcode) + "\n")
-        arqsaida.close
+            if (arq_inst[i][0:4] == "bne "):
+                opcode = OpBne(arq_inst[i])
+            elif (arq_inst[i][0:3] == "sw "):
+                opcode = OpSw(arq_inst[i])
+            elif (arq_inst[i][0:4] == "addi"):
+                opcode = OpAddi(arq_inst[i])
+            elif (arq_inst[i][0:3] == "lw "):
+                opcode = OpLw(arq_inst[i])
+            elif (arq_inst[i][0:4] == "sll "):
+                opcode = OpSll(arq_inst[i])
+            elif (arq_inst[i][0:4] == "add "):
+                opcode = OpAdd(arq_inst[i])
+            elif (arq_inst[i][0:4] == "xor "):
+                opcode = OpXor(arq_inst[i])
+            else:
+                opcode = "Instrução não localizada."
+            if (i == 0):
+                arqsaida = open(saida, "w")
+            else:
+                arqsaida = open(saida, "a")
+            if (i == len(arq_inst)):
+                arqsaida.write(opcode)
+            else:
+                arqsaida.write(str(opcode) + "\n")
+            arqsaida.close
 def OpBne(arq_inst):
     j, rs2, rs1, immediate = 5, '', '', ''
     while (arq_inst[j] != ','):

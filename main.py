@@ -20,5 +20,6 @@ elif (len(sys.argv) < 4 and len(sys.argv) == 3):
 elif(len(sys.argv) == 4):
     texto = open(sys.argv[1], "r")
     arq_inst = texto.readlines()
+    
     saida = sys.argv[len(sys.argv)-1] + ".asm"
     FuncoesAssembly.funcoesComParametro(arq_inst, saida)
