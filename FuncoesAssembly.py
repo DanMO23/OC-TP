@@ -74,8 +74,9 @@ def DefinirInstrução(arq_inst, i):
         
 
 
-def FormatR(arq_inst, func3, func7):
-    j, rd, rs1, rs2 = 5, '', '', ''
+def FormatR(arq_inst, func3, func7, tam_int):
+    j, rd, rs1, rs2 = tam_int+2, '', '', ''
+    #j = tamanho da instrução + 2
     while (arq_inst[j] != ','):
         rd = rd + arq_inst[j]
         j += 1
@@ -204,69 +205,18 @@ def OpLw(arq_inst):
 
 #Sll - Instrução no formato R
 def OpSll(arq_inst):
-    j, rd, rs1, rs2 = 5, '', '', ''
-    while (arq_inst[j] != ','):
-        rd = rd + arq_inst[j]
-        j += 1
-    j += 3
-    while (arq_inst[j] != ','):
-        rs1 = rs1 + arq_inst[j]
-        j += 1
-    j += 3
-    while (j != len(arq_inst)):
-        rs2 = rs2 + arq_inst[j]
-        j += 1
-    rd = int(rd)
-    rd = "{0:05b}".format(rd)
-    rs1 = int(rs1)
-    rs1 = "{0:05b}".format(rs1)
-    rs2 = int(rs2)
-    rs2 = "{0:05b}".format(rs2)
-    assemblyBin = "0000000" + rs2 + rs1 + "001" + rd + "0110011"
+    
+    assemblyBin = FormatR(arq_inst, func3["sll"], func7["sll"], 3)
     return assemblyBin
 
 #Add - Instrução no formato R
 def OpAdd(arq_inst):
-    j, rd, rs1, rs2 = 5, '', '', ''
-    while (arq_inst[j] != ','):
-        rd = rd + arq_inst[j]
-        j += 1
-    j += 3
-    while (arq_inst[j] != ','):
-        rs1 = rs1 + arq_inst[j]
-        j += 1
-    j += 3
-    while (j != len(arq_inst)):
-        rs2 = rs2 + arq_inst[j]
-        j += 1
-    rd = int(rd)
-    rd = "{0:05b}".format(rd)
-    rs1 = int(rs1)
-    rs1 = "{0:05b}".format(rs1)
-    rs2 = int(rs2)
-    rs2 = "{0:05b}".format(rs2)
-    assemblyBin = "0000000" + rs2 + rs1 + "000" + rd + Opcode['R']
+   
+    assemblyBin = FormatR(arq_inst, func3["add"], func7["add"], 3)
     return assemblyBin
 
 #Xor - Instrução no formato R
 def OpXor(arq_inst):
-    j, rd, rs1, rs2 = 5, '', '', ''
-    while (arq_inst[j] != ','):
-        rd = rd + arq_inst[j]
-        j += 1
-    j += 3
-    while (arq_inst[j] != ','):
-        rs1 = rs1 + arq_inst[j]
-        j += 1
-    j += 3
-    while (j != len(arq_inst)):
-        rs2 = rs2 + arq_inst[j]
-        j += 1
-    rd = int(rd)
-    rd = "{0:05b}".format(rd)
-    rs1 = int(rs1)
-    rs1 = "{0:05b}".format(rs1)
-    rs2 = int(rs2)
-    rs2 = "{0:05b}".format(rs2)
-    assemblyBin = "0000000" + rs2 + rs1 + "100" + rd + "0110011"
+    
+    assemblyBin = FormatR(arq_inst, func3["xor"], func7["xor"], 3)
     return assemblyBin
