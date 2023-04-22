@@ -53,7 +53,7 @@ def funcoesComParametro(arq_inst, saida):
             arqsaida.close
 
 
-def DefinirInstrução(arq_inst, i):
+def DefinirInstrucao(arq_inst, i):
     
     if (arq_inst[i][0:4] == "bne "):
         assemblyBin = OpBne(arq_inst[i])
