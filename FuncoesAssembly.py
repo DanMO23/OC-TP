@@ -221,7 +221,7 @@ def OpBne(arq_inst):
 #Sw - Instrução no formato S
 def OpSw(arq_inst):
     
-    assemblyBin = FormatS(arq_inst,func3["sw", DefinirTamanho(arq_inst)])
+    assemblyBin = FormatS(arq_inst,func3["sw"], DefinirTamanho(arq_inst))
     return assemblyBin
 
 #Addi - Instrução no formato I
