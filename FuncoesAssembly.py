@@ -32,14 +32,14 @@ def funcoesSemParametro(arq_inst):
         if (arq_inst[i][0] == "\n" or arq_inst[i][0:1] == " \n"):
             continue
         else:
-            assemblyBin = DefinirInstrução(arq_inst, i)
+            assemblyBin = DefinirInstrucao(arq_inst, i)
         print(assemblyBin)
 def funcoesComParametro(arq_inst, saida):
     for i in range(0, len(arq_inst)):
         if (arq_inst[i][0] == "\n" or arq_inst[i][0:1] == " \n"):
             continue
         else:
-            assemblyBin = DefinirInstrução(arq_inst, i)
+            assemblyBin = DefinirInstrucao(arq_inst, i)
 
 
             if (i == 0):
