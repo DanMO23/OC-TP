@@ -21,5 +21,5 @@ elif(len(sys.argv) == 4):
     texto = open(sys.argv[1], "r")
     arq_inst = texto.readlines()
     
-    saida = sys.argv[len(sys.argv)-1] + ".txt"
+    saida = sys.argv[len(sys.argv)-1] + ".bin"
     FuncoesAssembly.funcoesComParametro(arq_inst, saida)

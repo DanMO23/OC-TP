@@ -44,23 +44,27 @@ def funcoesSemParametro(arq_inst):
             continue
         else:
             assemblyBin = DefinirInstrucao(arq_inst, i)
-        print(assemblyBin)
+
+        if(assemblyBin != 0):
+            print(assemblyBin)
 def funcoesComParametro(arq_inst, saida):
     for i in range(0, len(arq_inst)):
         if (arq_inst[i][0] == "\n" or arq_inst[i][0:1] == " \n"):
             continue
         else:
             assemblyBin = DefinirInstrucao(arq_inst, i)
-
+            
 
             if (i == 0):
                 arqsaida = open(saida, "w")
             else:
                 arqsaida = open(saida, "a")
             if (i == len(arq_inst)):
-                arqsaida.write(assemblyBin)
+                if(assemblyBin != 0):
+                    arqsaida.write(assemblyBin)
             else:
-                arqsaida.write(str(assemblyBin) + "\n")
+                if(assemblyBin != 0):
+                    arqsaida.write(str(assemblyBin) + "\n")
             arqsaida.close
 
 
@@ -85,15 +89,16 @@ def DefinirInstrucao(arq_inst, i):
     elif(':' in arq_inst[i]):
 
         if not 'Rotulos' in locals():  
-            print("Criando vetor")
+            
             Rotulos = []
         
-        assemblyBin = "Rotulo Definido"
+        
 
         AdicionarRotulo(arq_inst[i], Rotulos)
         
 
-        print(Rotulos)
+        
+        return 0
 
     else:
         assemblyBin = "Instrução não localizada."
