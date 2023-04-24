@@ -24,6 +24,17 @@ func7 ={
 
 }
 
+#Função usada quando há rotulos no programa
+def AdicionarRotulo(Var_rotulo,Rotulos):
+    
+
+    label = Var_rotulo.split()[0]
+    if(label[len(label)-1] ==':'):
+        label = label[:-1]
+
+    Rotulos.append(label)
+
+
 
 
 def funcoesSemParametro(arq_inst):
@@ -32,14 +43,14 @@ def funcoesSemParametro(arq_inst):
         if (arq_inst[i][0] == "\n" or arq_inst[i][0:1] == " \n"):
             continue
         else:
-            assemblyBin = DefinirInstrução(arq_inst, i)
+            assemblyBin = DefinirInstrucao(arq_inst, i)
         print(assemblyBin)
 def funcoesComParametro(arq_inst, saida):
     for i in range(0, len(arq_inst)):
         if (arq_inst[i][0] == "\n" or arq_inst[i][0:1] == " \n"):
             continue
         else:
-            assemblyBin = DefinirInstrução(arq_inst, i)
+            assemblyBin = DefinirInstrucao(arq_inst, i)
 
 
             if (i == 0):
@@ -69,6 +80,21 @@ def DefinirInstrucao(arq_inst, i):
         assemblyBin = OpAdd(arq_inst[i])
     elif (arq_inst[i][0:4] == "xor "):
         assemblyBin = OpXor(arq_inst[i])
+
+    #Funcao usada quando há rotulos
+    elif(':' in arq_inst[i]):
+
+        if not 'Rotulos' in locals():  
+            print("Criando vetor")
+            Rotulos = []
+        
+        assemblyBin = "Rotulo Definido"
+
+        AdicionarRotulo(arq_inst[i], Rotulos)
+        
+
+        print(Rotulos)
+
     else:
         assemblyBin = "Instrução não localizada."
 
