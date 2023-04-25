@@ -11,7 +11,7 @@ if (len(sys.argv) < 2):
     sys.exit
 
 #Se o numero de argumentos for menor do que 4, o arquivo de saida nao foi passado
-elif (len(sys.argv) < 4 and len(sys.argv) == 3):
+elif (len(sys.argv) < 4 and len(sys.argv) >= 2):
     texto = open(sys.argv[1], "r")
     arq_inst = texto.readlines()
     FuncoesAssembly.funcoesSemParametro(arq_inst)
