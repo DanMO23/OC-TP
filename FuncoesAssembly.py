@@ -1,5 +1,8 @@
 import sys
 
+#Dicionário para armazenamento dos rótulos de instruções
+Rotulos = {}
+
 Opcode = {
     'R':"0110011",
     'I':"0000011",
@@ -25,35 +28,33 @@ func7 ={
 }
 
 #Função usada quando há rotulos no programa
-def AdicionarRotulo(Var_rotulo,Rotulos):
+#Definido 2000 como endereço inicial do programa incrementando em 4 a cada linha de instrução
+def AdicionarRotulo(Var_rotulo, numInstrucao):
     
-
     label = Var_rotulo.split()[0]
     if(label[len(label)-1] ==':'):
         label = label[:-1]
-
-    Rotulos.append(label)
-
-
-
+    Rotulos[label] = 2000 + (numInstrucao * 4)
 
 def funcoesSemParametro(arq_inst):
-    
     for i in range(0, len(arq_inst)):
         if (arq_inst[i][0] == "\n" or arq_inst[i][0:1] == " \n"):
             continue
         else:
             assemblyBin = DefinirInstrucao(arq_inst, i)
-
         if(assemblyBin != 0):
             print(assemblyBin)
+
 def funcoesComParametro(arq_inst, saida):
+    Rotulos = []
     for i in range(0, len(arq_inst)):
         if (arq_inst[i][0] == "\n" or arq_inst[i][0:1] == " \n"):
             continue
         else:
-            assemblyBin = DefinirInstrucao(arq_inst, i)
-            
+            if (DefinirInstrucao(arq_inst, i) == type(list)):
+                Rotulos += DefinirInstrucao(arq_inst, i)
+            else:
+                assemblyBin = DefinirInstrucao(arq_inst, i)
 
             if (i == 0):
                 arqsaida = open(saida, "w")
@@ -66,7 +67,6 @@ def funcoesComParametro(arq_inst, saida):
                 if(assemblyBin != 0):
                     arqsaida.write(str(assemblyBin) + "\n")
             arqsaida.close
-
 
 def DefinirInstrucao(arq_inst, i):
     
@@ -87,17 +87,7 @@ def DefinirInstrucao(arq_inst, i):
 
     #Funcao usada quando há rotulos
     elif(':' in arq_inst[i]):
-
-        if not 'Rotulos' in locals():  
-            
-            Rotulos = []
-        
-        
-
-        AdicionarRotulo(arq_inst[i], Rotulos)
-        
-
-        
+        AdicionarRotulo(arq_inst[i], i)
         return 0
 
     else:
@@ -174,7 +164,6 @@ def FormatI(arq_inst, func3,  tam_int):
             return assemblyBin
         if (negativo):
             immediate = (pow(2, 12) - immediate)
-            negativo = False
         immediate = "{0:012b}".format(immediate)
         assemblyBin = immediate + rs1 + func3 + rd + Opcode["I"]
         return assemblyBin
@@ -237,9 +226,12 @@ def FormatSB(arq_inst,  func3, tam_int):
         rs2 = rs2 + arq_inst[j]
         j += 1
     j += 2
-    while (j != len(arq_inst)):
-        immediate = immediate + arq_inst[j]
-        j += 1
+    if (arq_inst[j:len(arq_inst)] in Rotulos):
+        immediate = Rotulos[arq_inst[j:len(arq_inst)]]
+    else:
+        while (j != len(arq_inst)):
+            immediate = immediate + arq_inst[j]
+            j += 1
     rs2 = int(rs2)
     rs2 = "{0:05b}".format(rs2)
     rs1 = int(rs1)
