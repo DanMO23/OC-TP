@@ -146,6 +146,7 @@ def FormatI(arq_inst, func3,  tam_int):
 
     #caso seja addi
     if(arq_inst[0:(tam_int-2)] == "addi"):
+        negativo = False
         while (arq_inst[j] != ','):
             rd = rd + arq_inst[j]
             j += 1
@@ -165,6 +166,12 @@ def FormatI(arq_inst, func3,  tam_int):
         rs1 = int(rs1)
         rs1 = "{0:05b}".format(rs1)
         immediate = int(immediate)
+        if (negativo and immediate > 2048):
+            assemblyBin = "Valor do imediato inferior a -2048"
+            return assemblyBin
+        elif (immediate > 2047):
+            assemblyBin = "Valor do imediato superior a 2047"
+            return assemblyBin
         if (negativo):
             immediate = (pow(2, 12) - immediate)
             negativo = False
